@@ -7,7 +7,7 @@
     "dev:compose": "docker compose -f compose.dev.yaml up --watch --build",
     "dev": "vite --host 0.0.0.0",
     "build:compose": "docker compose --file compose.yaml build",
-    "build": "tsc -b && vite build",
+    "build": "vitest run && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview --host 0.0.0.0",
     "test": "vitest"

@@ -1,9 +1,7 @@
 import RegisterUserTypeForm from "../../../components/organisms/RegisterUserTypeForm";
 import { Heading, Text } from "@radix-ui/themes";
 
-type Props = {};
-
-export default function UserTypeFormPage({}: Props) {
+export default function UserTypeFormPage() {
   return (
     <>
       <Heading as="h2" size="7" align="left" mb="4">

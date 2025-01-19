@@ -1,9 +1,7 @@
 import { Outlet } from "react-router";
 import RegisterScreen from "../../components/organisms/RegisterScreen";
 
-type Props = {};
-
-export default function RegisterPage({}: Props) {
+export default function RegisterPage() {
   return (
     <RegisterScreen>
       <Outlet />

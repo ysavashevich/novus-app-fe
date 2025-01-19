@@ -1,7 +1,3 @@
-import React from "react";
-
-type Props = {};
-
-export default function LoginPage({}: Props) {
+export default function LoginPage() {
   return <div>LoginPage</div>;
 }
