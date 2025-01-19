@@ -17,9 +17,7 @@ import { selectUserType } from "../../../store/registerSlice";
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
 
-type Props = {};
-
-export default function RegisterMainForm({}: Props) {
+export default function RegisterMainForm() {
   const userType = useAppSelector(selectUserType);
 
   const navigate = useNavigate();
@@ -45,7 +43,7 @@ export default function RegisterMainForm({}: Props) {
     if (!userType) {
       navigate("/register/user-type");
     }
-  }, [userType]);
+  }, [userType, navigate]);
 
   return (
     <Form.Root

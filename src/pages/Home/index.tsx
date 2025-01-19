@@ -4,8 +4,6 @@ import * as Progress from "@radix-ui/react-progress";
 import { css } from "@emotion/react";
 import { useGetPlaceholderQuery } from "../../store/apiSlice";
 
-type Props = {};
-
 const progressStyles = css`
   position: relative;
   overflow: hidden;
@@ -23,7 +21,7 @@ const progressIndicator = css`
   transition: transform 660ms cubic-bezier(0.65, 0, 0.35, 1);
 `;
 
-export default function HomePage({}: Props) {
+export default function HomePage() {
   const { isError, isLoading, currentData, isSuccess } =
     useGetPlaceholderQuery();
 

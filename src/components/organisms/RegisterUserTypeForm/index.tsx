@@ -6,11 +6,9 @@ import { useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { selectUserType, userTypeChosen } from "../../../store/registerSlice";
 
-type Props = {};
-
 const defaultValue = "business";
 
-export default function RegisterUserTypeForm({}: Props) {
+export default function RegisterUserTypeForm() {
   const userType = useAppSelector(selectUserType);
 
   const dispatch = useAppDispatch();

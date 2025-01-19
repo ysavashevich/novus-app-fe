@@ -3,9 +3,7 @@ import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { Flex, Heading, Link } from "@radix-ui/themes";
 import { NavLink } from "react-router";
 
-type Props = {};
-
-export default function MainFormPage({}: Props) {
+export default function MainFormPage() {
   return (
     <>
       <Flex>

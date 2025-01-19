@@ -3,9 +3,7 @@ import { Link } from "react-router";
 import { Link as RadixLink } from "@radix-ui/themes";
 import Logo from "../../atoms/Logo";
 
-type Props = {};
-
-export default function LogoLink({}: Props) {
+export default function LogoLink() {
   return (
     <Flex asChild align="center">
       <RadixLink asChild underline="none" color="gray" highContrast>
