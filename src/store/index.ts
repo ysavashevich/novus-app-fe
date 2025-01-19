@@ -1,7 +1,8 @@
 import { configureStore, combineSlices } from "@reduxjs/toolkit";
 import { apiSlice } from "./apiSlice";
+import { registerSlice } from "./registerSlice";
 
-const rootReducer = combineSlices(apiSlice);
+const rootReducer = combineSlices(registerSlice, apiSlice);
 
 export const store = configureStore({
   reducer: rootReducer,

@@ -1,6 +1,6 @@
 import { it, expect, describe } from "vitest";
 import { render, screen } from "@testing-library/react";
-import Input from "../components/atoms/input/Input";
+import Input from "../components/atoms/Input";
 import "@testing-library/jest-dom/vitest";
 
 describe("temp", () => {
