@@ -11,7 +11,7 @@ type Props = {
   children: ReactNode;
 };
 
-export default function RegisterScreen({ children }: Props) {
+export default function AuthScreen({ children }: Props) {
   return (
     <Flex
       direction={{ initial: "column", md: "row" }}

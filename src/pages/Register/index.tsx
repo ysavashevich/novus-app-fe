@@ -1,10 +1,10 @@
 import { Outlet } from "react-router";
-import RegisterScreen from "../../components/organisms/RegisterScreen";
+import AuthScreen from "../../components/organisms/AuthScreen";
 
 export default function RegisterPage() {
   return (
-    <RegisterScreen>
+    <AuthScreen>
       <Outlet />
-    </RegisterScreen>
+    </AuthScreen>
   );
 }
