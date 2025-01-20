@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import * as Form from "@radix-ui/react-form";
 import Input from "../../atoms/Input";
-import { Button, Flex } from "@radix-ui/themes";
-import { PaperPlaneIcon } from "@radix-ui/react-icons";
+import { Button, Flex, Text } from "@radix-ui/themes";
+import { CrossCircledIcon, PaperPlaneIcon } from "@radix-ui/react-icons";
 import {
   DIGIT_REGEX,
   LOWERCASE_REGEX,
@@ -12,21 +12,35 @@ import {
   EMAIL_REGEX,
   PHONE_REGEX,
 } from "../../../constants/regex";
-import { useAppSelector } from "../../../store/hooks";
-import { selectUserType } from "../../../store/registerSlice";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { selectUserType, userRegistered } from "../../../store/registerSlice";
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
+import { useRegisterMutation } from "../../../store/apiSlice";
+import useReduxError from "../../../hooks/useReduxError";
+
+type FormData = {
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
+};
 
 export default function RegisterMainForm() {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const userType = useAppSelector(selectUserType);
 
-  const navigate = useNavigate();
+  const [registerUser, { isLoading, isSuccess, error }] = useRegisterMutation();
+
+  const reduxError = useReduxError(error);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<FormData>({
     defaultValues: {
       fullName: "",
       email: "",
@@ -37,13 +51,22 @@ export default function RegisterMainForm() {
     reValidateMode: "onChange",
   });
 
-  const onSubmit = () => {};
+  const onSubmit = async (data: FormData) => {
+    await registerUser({ ...data, userType: userType! });
+  };
 
   useEffect(() => {
     if (!userType) {
       navigate("/register/user-type");
     }
-  }, [userType, navigate]);
+  }, []);
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(userRegistered());
+      navigate("/login");
+    }
+  }, [isSuccess, navigate, dispatch]);
 
   return (
     <Form.Root
@@ -93,8 +116,16 @@ export default function RegisterMainForm() {
           },
         })}
       />
+      {reduxError && (
+        <Flex mt="1" mb="2" align="center">
+          <Flex mr="1">
+            <CrossCircledIcon color="tomato" />
+          </Flex>
+          <Text color="tomato">{reduxError}</Text>
+        </Flex>
+      )}
       <Form.Submit asChild>
-        <Button type="submit">
+        <Button type="submit" loading={isLoading}>
           <Flex as="span" align="end" justify="center">
             <PaperPlaneIcon />
           </Flex>{" "}
