@@ -1,9 +1,10 @@
 import { configureStore, combineSlices } from "@reduxjs/toolkit";
 import { apiSlice } from "./apiSlice";
 import { registerSlice } from "./registerSlice";
+import { userSlice } from "./userSlice";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
-const rootReducer = combineSlices(registerSlice, apiSlice);
+const rootReducer = combineSlices(registerSlice, userSlice, apiSlice);
 
 export type RootState = ReturnType<typeof rootReducer>;
 

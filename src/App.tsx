@@ -7,6 +7,7 @@ import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
 import UserTypeFormPage from "./pages/Register/UserTypeForm";
 import MainFormPage from "./pages/Register/MainForm";
+import ProtectedRoute from "./components/misc/ProtectedRoute";
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
         />
         <Route path="user-type" element={<UserTypeFormPage />} />
         <Route path="form" element={<MainFormPage />} />
+      </Route>
+      <Route element={<ProtectedRoute />}>
+        <Route path="/dashboard" element={<div>Dashboard</div>} />
       </Route>
     </Routes>
   );

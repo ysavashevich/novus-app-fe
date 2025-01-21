@@ -1,3 +1,8 @@
+[0.2.0] - 2025-01-21
+
+- Save token to localStorage
+- Add protected routes
+
 [0.1.3] - 2025-01-21
 
 - Refactor and test auth forms

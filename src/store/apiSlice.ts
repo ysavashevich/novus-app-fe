@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { API_ENDPOINT } from "../constants";
+import { setUser } from "./userSlice";
 
 export type User = {
   fullName: string;
@@ -26,6 +27,15 @@ export const apiSlice = createApi({
         method: "POST",
         body: user,
       }),
+      async onQueryStarted(_args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          console.log(data);
+          dispatch(setUser({ token: data.access_token, user: data.user }));
+        } catch (error) {
+          console.log(error, "error");
+        }
+      },
     }),
   }),
 });
