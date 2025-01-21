@@ -12,8 +12,6 @@ import {
   EMAIL_REGEX,
   PHONE_REGEX,
 } from "../../../constants/regex";
-import { useAppSelector } from "../../../store/hooks";
-import { selectUserType } from "../../../store/registerSlice";
 import { User } from "../../../store/apiSlice";
 
 type FormData = {
