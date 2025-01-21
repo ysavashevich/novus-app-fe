@@ -4,23 +4,23 @@ import Input from "../../atoms/Input";
 import { Button, Flex, Text } from "@radix-ui/themes";
 import { CrossCircledIcon, PaperPlaneIcon } from "@radix-ui/react-icons";
 import { EMAIL_REGEX } from "../../../constants/regex";
-import { useNavigate } from "react-router";
-import { useEffect } from "react";
-import { useLoginMutation } from "../../../store/apiSlice";
-import useReduxError from "../../../hooks/useReduxError";
 
 type FormData = {
   email: string;
   password: string;
 };
 
-export default function LoginForm() {
-  const [loginUser, { isLoading, isSuccess, error }] = useLoginMutation();
+type Props = {
+  submitHandler: (user: { email: string; password: string }) => Promise<any>;
+  errorMessage: string | null;
+  isLoading: boolean;
+};
 
-  const reduxError = useReduxError(error);
-
-  const navigate = useNavigate();
-
+export default function LoginForm({
+  submitHandler,
+  errorMessage,
+  isLoading,
+}: Props) {
   const {
     register,
     handleSubmit,
@@ -35,15 +35,12 @@ export default function LoginForm() {
   });
 
   const onSubmit = async (data: FormData) => {
-    await loginUser({ ...data });
+    await submitHandler({ ...data });
   };
-
-  useEffect(() => {
-    if (isSuccess) navigate("/dashboard");
-  }, [isSuccess, navigate]);
 
   return (
     <Form.Root
+      data-testid="login-form"
       onSubmit={handleSubmit(onSubmit)}
       style={{ width: "100%", display: "block" }}
     >
@@ -61,12 +58,12 @@ export default function LoginForm() {
         error={errors.password?.message}
         {...register("password", { required: "This field is required." })}
       />
-      {reduxError && (
+      {errorMessage && (
         <Flex mt="1" mb="2" align="center">
           <Flex mr="1">
             <CrossCircledIcon color="tomato" />
           </Flex>
-          <Text color="tomato">{reduxError}</Text>
+          <Text color="tomato">{errorMessage}</Text>
         </Flex>
       )}
       <Form.Submit asChild>

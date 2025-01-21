@@ -1,3 +1,7 @@
+[0.1.3] - 2025-01-21
+
+- Refactor and test auth forms
+
 [0.1.2] - 2025-01-20
 
 - Cleanup homescreen

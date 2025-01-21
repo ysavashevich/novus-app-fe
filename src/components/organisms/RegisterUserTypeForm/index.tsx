@@ -2,27 +2,25 @@ import { FormEvent, useState } from "react";
 import * as Form from "@radix-ui/react-form";
 import { Button, Flex, RadioCards, Text } from "@radix-ui/themes";
 import { DoubleArrowRightIcon } from "@radix-ui/react-icons";
-import { useNavigate } from "react-router";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { selectUserType, userTypeChosen } from "../../../store/registerSlice";
 
 const defaultValue = "business";
 
-export default function RegisterUserTypeForm() {
-  const userType = useAppSelector(selectUserType);
+type Props = {
+  submitHandler: (str: string) => void;
+  defaultUserType: string | null;
+};
 
-  const dispatch = useAppDispatch();
-
-  const [value, setValue] = useState(() => userType || defaultValue);
-
-  const navigate = useNavigate();
+export default function RegisterUserTypeForm({
+  submitHandler,
+  defaultUserType,
+}: Props) {
+  const [value, setValue] = useState(() => defaultUserType || defaultValue);
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     if (value) {
-      dispatch(userTypeChosen(value));
-      navigate("/register/form");
+      submitHandler(value);
     }
   };
 
@@ -30,7 +28,7 @@ export default function RegisterUserTypeForm() {
     <Form.Root onSubmit={onSubmit} style={{ width: "100%", display: "block" }}>
       <Flex direction="column">
         <RadioCards.Root
-          defaultValue={userType || defaultValue}
+          defaultValue={defaultUserType || defaultValue}
           columns={{ initial: "1" }}
           mb="6"
           name="userType"
