@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { API_ENDPOINT } from "../constants";
 
-type User = {
+export type User = {
   fullName: string;
   email: string;
   phoneNumber: string;

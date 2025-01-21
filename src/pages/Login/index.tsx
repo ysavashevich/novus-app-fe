@@ -3,9 +3,23 @@ import AuthScreen from "../../components/organisms/AuthScreen";
 import { useAppSelector } from "../../store/hooks";
 import { selectDidRegister } from "../../store/registerSlice";
 import LoginForm from "../../components/organisms/LoginForm";
+import { useEffect } from "react";
+import { useLoginMutation } from "../../store/apiSlice";
+import { useNavigate } from "react-router";
+import useReduxError from "../../hooks/useReduxError";
 
 export default function LoginPage() {
+  const navigate = useNavigate();
+
   const didRegister = useAppSelector(selectDidRegister);
+
+  const [loginUser, { isLoading, isSuccess, error }] = useLoginMutation();
+
+  const reduxError = useReduxError(error);
+
+  useEffect(() => {
+    if (isSuccess) navigate("/dashboard");
+  }, [isSuccess, navigate]);
 
   return (
     <AuthScreen>
@@ -28,7 +42,11 @@ export default function LoginPage() {
           </Text>
         </>
       )}
-      <LoginForm />
+      <LoginForm
+        submitHandler={loginUser}
+        isLoading={isLoading}
+        errorMessage={reduxError}
+      />
     </AuthScreen>
   );
 }

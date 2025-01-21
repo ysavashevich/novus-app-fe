@@ -26,7 +26,7 @@ const Input = forwardRef<HTMLInputElement, Props & UseFormRegisterReturn>(
               <Flex mr="1">
                 <CrossCircledIcon color="tomato" />
               </Flex>
-              <Form.Message>
+              <Form.Message role="alert" data-testid={`${props.name}-msg`}>
                 <Text color="tomato">{error}</Text>
               </Form.Message>
             </>

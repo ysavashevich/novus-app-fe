@@ -12,12 +12,7 @@ import {
   EMAIL_REGEX,
   PHONE_REGEX,
 } from "../../../constants/regex";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { selectUserType, userRegistered } from "../../../store/registerSlice";
-import { useNavigate } from "react-router";
-import { useEffect } from "react";
-import { useRegisterMutation } from "../../../store/apiSlice";
-import useReduxError from "../../../hooks/useReduxError";
+import { User } from "../../../store/apiSlice";
 
 type FormData = {
   fullName: string;
@@ -26,16 +21,19 @@ type FormData = {
   password: string;
 };
 
-export default function RegisterMainForm() {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+type Props = {
+  submitHandler: (user: User) => Promise<any>;
+  errorMessage: string | null;
+  isLoading: boolean;
+  userType: string | null;
+};
 
-  const userType = useAppSelector(selectUserType);
-
-  const [registerUser, { isLoading, isSuccess, error }] = useRegisterMutation();
-
-  const reduxError = useReduxError(error);
-
+export default function RegisterMainForm({
+  submitHandler,
+  errorMessage,
+  isLoading,
+  userType,
+}: Props) {
   const {
     register,
     handleSubmit,
@@ -52,24 +50,12 @@ export default function RegisterMainForm() {
   });
 
   const onSubmit = async (data: FormData) => {
-    await registerUser({ ...data, userType: userType! });
+    await submitHandler({ ...data, userType: userType! });
   };
-
-  useEffect(() => {
-    if (!userType) {
-      navigate("/register/user-type");
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isSuccess) {
-      dispatch(userRegistered());
-      navigate("/login");
-    }
-  }, [isSuccess, navigate, dispatch]);
 
   return (
     <Form.Root
+      data-testid="main-form"
       onSubmit={handleSubmit(onSubmit)}
       style={{ width: "100%", display: "block" }}
     >
@@ -116,12 +102,12 @@ export default function RegisterMainForm() {
           },
         })}
       />
-      {reduxError && (
+      {errorMessage && (
         <Flex mt="1" mb="2" align="center">
           <Flex mr="1">
             <CrossCircledIcon color="tomato" />
           </Flex>
-          <Text color="tomato">{reduxError}</Text>
+          <Text color="tomato">{errorMessage}</Text>
         </Flex>
       )}
       <Form.Submit asChild>
